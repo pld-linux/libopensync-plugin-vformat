@@ -1,0 +1,40 @@
+--- libopensync-vformat-0.30/SConstruct~	2007-05-31 20:13:22.000000000 +0300
++++ libopensync-vformat-0.30/SConstruct	2007-06-14 23:55:30.703332159 +0300
+@@ -23,8 +23,9 @@
+ opts = Options('vformat.conf')
+ opts.Add('debug', 'Should debugging be enabled?', 1)
+ opts.Add(BoolOption('debug_modules', 'Should unloading of shared modules be avoided (DEBUGGING ONLY!)', 0))
+-opts.Add(('APPEND_LDFLAGS', 'Linker flags'))
+-opts.Add(('APPEND_CCFLAGS', 'Compiler flags'))
++opts.Add(('CC', 'Compiler'))
++opts.Add(('LDFLAGS', 'Linker flags'))
++opts.Add(('CFLAGS', 'Compiler flags'))
+ opts.Add(('DESTDIR', 'Set the root directory to install into ( /path/to/DESTDIR )', ''))
+ 
+ target_dir = SelectBuildDir('build')
+@@ -46,8 +47,12 @@
+ You can set the following options:
+ """ + opts.GenerateHelpText(env))
+ 
+-env.Append(CCFLAGS = Split('$APPEND_CCFLAGS'))
+-env.Append(LDFLAGS = Split('$APPEND_LDFLAGS'))
++env.Replace(
++       CC = env['CC'],
++       CFLAGS = env['CFLAGS'],
++       CXX = env['CXX'],
++       CXXFLAGS = env['CXXFLAGS'],
++)
+ 
+ testenv = check(env, config)
+ 
+--- libopensync-vformat-0.30/build/linux/osync_build.py~	2007-05-31 20:15:36.000000000 +0300
++++ libopensync-vformat-0.30/build/linux/osync_build.py	2007-06-14 23:56:31.914719190 +0300
+@@ -34,7 +34,7 @@
+ 	env.ParseConfig('pkg-config --cflags --libs libxml-2.0')
+ 	env.ParseConfig('pkg-config --cflags --libs opensync-1.0')
+ 	env.Append(CCFLAGS = r'-I.')
+-	env.Append(CCFLAGS = [r'-Wall', r'-Werror', r'-O2'])
++	env.Append(CCFLAGS = [r'-Wall', r'-Werror'])
+ 	env.Append(CCFLAGS = r'-DVERSION="\"' + config.version + r'\""')
+ 	
+ 	testenv = env.Copy()
