@@ -1,4 +1,5 @@
 Summary:	OpenSync vFormat Plugin
+Summary(pl.UTF-8):	Wtyczka vFormat dla szkieletu OpenSync
 Name:		libopensync-plugin-vformat
 Version:	0.30
 Release:	1
@@ -29,7 +30,7 @@ synchronizacji danych.
 Składa się z różnych wtyczek, których można używać do łączenia z
 urządzeniami, potężnego silnika synchronizacji oraz samego szkieletu.
 
-Ten pakiet zawiera wtyczkę vformat dla szkieletu OpenSync.
+Ten pakiet zawiera wtyczkę vFormat dla szkieletu OpenSync.
 
 %prep
 %setup -q -n libopensync-vformat-%{version}
