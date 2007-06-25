@@ -8,6 +8,7 @@ Group:		Libraries
 Source0:	http://www.opensync.org/attachment/wiki/download/libopensync-vformat-%{version}.tar.bz2?format=raw
 # Source0-md5:	f7b6144ed7ceaf50b1d0eec21401f19d
 URL:		http://www.opensync.org/
+Patch0:		%{name}-opt.patch
 BuildRequires:	glib2-devel >= 1:2.4
 BuildRequires:	libopensync-devel >= %{version}
 BuildRequires:	pkgconfig
@@ -34,8 +35,11 @@ Ten pakiet zawiera wtyczkę vFormat dla szkieletu OpenSync.
 
 %prep
 %setup -q -n libopensync-vformat-%{version}
+%{__sed} -i -e 's,\r$,,' build/linux/osync_build.py
+%patch0 -p1
 
 %build
+rm -f vformat.conf
 %scons \
 	prefix=%{_prefix}
 
