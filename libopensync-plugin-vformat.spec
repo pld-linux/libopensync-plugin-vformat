@@ -1,18 +1,17 @@
 Summary:	OpenSync vFormat Plugin
 Summary(pl.UTF-8):	Wtyczka vFormat dla szkieletu OpenSync
 Name:		libopensync-plugin-vformat
-Version:	0.30
+Version:	0.36
 Release:	1
 License:	LGPL
 Group:		Libraries
-Source0:	http://www.opensync.org/attachment/wiki/download/libopensync-vformat-%{version}.tar.bz2?format=raw
-# Source0-md5:	f7b6144ed7ceaf50b1d0eec21401f19d
+Source0:	http://www.opensync.org/download/releases/0.36/%{name}-%{version}.tar.bz2
+# Source0-md5:	f3d1efdc1e7142fc74364e92f2066ee0
 URL:		http://www.opensync.org/
-Patch0:		%{name}-opt.patch
 BuildRequires:	glib2-devel >= 1:2.4
 BuildRequires:	libopensync-devel >= %{version}
 BuildRequires:	pkgconfig
-BuildRequires:	scons
+BuildRequires:	cmake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -34,18 +33,23 @@ urządzeniami, potężnego silnika synchronizacji oraz samego szkieletu.
 Ten pakiet zawiera wtyczkę vFormat dla szkieletu OpenSync.
 
 %prep
-%setup -q -n libopensync-vformat-%{version}
-%{__sed} -i -e 's,\r$,,' build/linux/osync_build.py
-%patch0 -p1
+%setup -q
 
 %build
-rm -f vformat.conf
-%scons \
-	prefix=%{_prefix}
+mkdir build
+cd build
+%cmake \
+	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
+%if "%{_lib}" != "lib"
+	-DLIB_SUFFIX=64 \
+%endif
+	../
+
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%scons install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
@@ -53,5 +57,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS README
-%attr(755,root,root) %{_libdir}/opensync/formats/*.so
+%doc AUTHORS
+%attr(755,root,root) %{_bindir}/vconvert
+%attr(755,root,root) %{_libdir}/opensync-1.0/formats/*.so
