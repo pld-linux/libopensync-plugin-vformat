@@ -1,12 +1,12 @@
 Summary:	OpenSync vFormat Plugin
 Summary(pl.UTF-8):	Wtyczka vFormat dla szkieletu OpenSync
 Name:		libopensync-plugin-vformat
-Version:	0.36
+Version:	0.37
 Release:	1
 License:	LGPL
 Group:		Libraries
-Source0:	http://www.opensync.org/download/releases/0.36/%{name}-%{version}.tar.bz2
-# Source0-md5:	f3d1efdc1e7142fc74364e92f2066ee0
+Source0:	http://www.opensync.org/download/releases/0.37/%{name}-%{version}.tar.bz2
+# Source0-md5:	30eae64f28410c618a8bc49c31c10650
 URL:		http://www.opensync.org/
 BuildRequires:	glib2-devel >= 1:2.4
 BuildRequires:	libopensync-devel >= 1:%{version}
@@ -59,4 +59,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS
 %attr(755,root,root) %{_bindir}/vconvert
-%attr(755,root,root) %{_libdir}/opensync-1.0/formats/*.so
+%attr(755,root,root) %{_libdir}/libopensync1/formats/*.so
