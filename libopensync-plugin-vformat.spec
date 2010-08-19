@@ -8,10 +8,10 @@ Group:		Libraries
 Source0:	http://www.opensync.org/download/releases/%{version}/%{name}-%{version}.tar.bz2
 # Source0-md5:	2c4e179fd6e9e07e1af136c23a9b49c8
 URL:		http://www.opensync.org/
+BuildRequires:	cmake
 BuildRequires:	glib2-devel >= 1:2.4
 BuildRequires:	libopensync-devel >= 1:%{version}
 BuildRequires:	pkgconfig
-BuildRequires:	cmake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -59,4 +59,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS
 %attr(755,root,root) %{_bindir}/vconvert
-%attr(755,root,root) %{_libdir}/libopensync1/formats/*.so
+%attr(755,root,root) %{_libdir}/libopensync1/formats/vcard.so
+%attr(755,root,root) %{_libdir}/libopensync1/formats/vevent.so
+%attr(755,root,root) %{_libdir}/libopensync1/formats/vformat-xmlformat.so
+%attr(755,root,root) %{_libdir}/libopensync1/formats/vjournal.so
+%attr(755,root,root) %{_libdir}/libopensync1/formats/vnote.so
+%attr(755,root,root) %{_libdir}/libopensync1/formats/vtodo.so
