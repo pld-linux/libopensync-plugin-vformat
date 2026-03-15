@@ -2,12 +2,13 @@ Summary:	OpenSync vFormat Plugin
 Summary(pl.UTF-8):	Wtyczka vFormat dla szkieletu OpenSync
 Name:		libopensync-plugin-vformat
 Version:	0.39
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		Libraries
 # originally http://www.opensync.org/download/releases/%{version}/%{name}-%{version}.tar.bz2
 Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	2c4e179fd6e9e07e1af136c23a9b49c8
+Patch0:		check-0.15.patch
 # dead domain
 #URL:		http://www.opensync.org/
 BuildRequires:	cmake >= 2.4.4
@@ -39,6 +40,7 @@ Ten pakiet zawiera wtyczkę vFormat dla szkieletu OpenSync.
 
 %prep
 %setup -q
+%patch -P0 -p1
 
 %build
 install -d build

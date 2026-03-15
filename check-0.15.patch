@@ -1,0 +1,38 @@
+--- a/tests/support.h	2009-09-20 22:33:51.000000000 +0200
++++ b/tests/support.h	2026-03-15 12:49:35.796564026 +0100
+@@ -9,7 +9,7 @@
+ char *setup_testbed(char *fkt_name);
+ void destroy_testbed(char *path);
+ // create_case() with timeout of 30seconds (default)
+-void create_case(Suite *s, const char *name, TFun function);
++void create_case(Suite *s, const char *name, const TTest *ttest);
+ // create_case_timeout() allow to specific a specific timeout - intended for breaking testcases which needs longer then 30seconds (default)
+-void create_case_timeout(Suite *s, const char *name, TFun function, int timeout);
++void create_case_timeout(Suite *s, const char *name, const TTest *ttest, int timeout);
+
+--- a/tests/support.c	2009-09-20 22:33:51.000000000 +0200
++++ b/tests/support.c	2026-03-15 12:49:42.059897359 +0100
+@@ -77,20 +77,20 @@
+ 	g_free(path);
+ }
+
+-void create_case(Suite *s, const char *name, TFun function)
++void create_case(Suite *s, const char *name, const TTest *ttest)
+ {
+ 	TCase *tc_new = tcase_create(name);
+ 	tcase_set_timeout(tc_new, 30);
+ 	suite_add_tcase (s, tc_new);
+-	tcase_add_test(tc_new, function);
++	_tcase_add_test(tc_new, ttest, 0, 0, 0, 1);
+ }
+
+
+-void create_case_timeout(Suite *s, const char *name, TFun function, int timeout)
++void create_case_timeout(Suite *s, const char *name, const TTest *ttest, int timeout)
+ {
+ 	TCase *tc_new = tcase_create(name);
+ 	tcase_set_timeout(tc_new, timeout);
+ 	suite_add_tcase (s, tc_new);
+-	tcase_add_test(tc_new, function);
++	_tcase_add_test(tc_new, ttest, 0, 0, 0, 1);
+ }
